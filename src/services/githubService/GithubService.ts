@@ -1,6 +1,10 @@
 import { AxiosResponse } from "axios";
 import { api } from "../api";
-import { IIssuesListDTO, IUserDTO } from "./dtos/GithubServiceDTOs";
+import {
+  IIssuesListDTO,
+  ISingleIssueDTO,
+  IUserDTO,
+} from "./dtos/GithubServiceDTOs";
 
 interface IRepoParams {
   query?: string;
@@ -33,8 +37,10 @@ class GithubService {
     user,
     id,
     repo,
-  }: ISingleIssue): Promise<AxiosResponse> {
-    return await api.get(`/repos/${user}/${repo}/issues/${id}`);
+  }: ISingleIssue): Promise<AxiosResponse<ISingleIssueDTO>> {
+    return await api.get<ISingleIssueDTO>(
+      `/repos/${user}/${repo}/issues/${id}`
+    );
   }
 }
 

@@ -1,7 +1,6 @@
 import { ReactNode, useCallback, useContext, useState } from "react";
 import { createContext } from "use-context-selector";
 import { IError } from "../../errors/IError";
-import { useContextSelector } from "use-context-selector";
 
 export interface ICreateContext {
   error: IError | null;

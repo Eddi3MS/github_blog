@@ -78,9 +78,3 @@ export const Hero = styled.div`
     }
   }
 `;
-
-export const Error = styled.div`
-  background-color: var(--label);
-  padding: 2.5rem;
-  text-align: center;
-`;

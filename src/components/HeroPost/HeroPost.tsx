@@ -19,7 +19,6 @@ interface IHeroPost {
     issueTitle: string;
     createdAt: string;
     commentsNumber: number;
-    commentsURL: string;
   };
 }
 
@@ -53,12 +52,11 @@ const HeroPost = ({ data }: IHeroPost) => {
           <FontAwesomeIcon icon={faCalendarDay as IconProp} />
           {getPostTime(data.createdAt)}
         </span>
-        <a href={data.commentsURL} target="_blank" rel="noopener">
-          <span>
-            <FontAwesomeIcon icon={faComment as IconProp} />{" "}
-            {data.commentsNumber} comentários
-          </span>
-        </a>
+
+        <span>
+          <FontAwesomeIcon icon={faComment as IconProp} /> {data.commentsNumber}{" "}
+          comentários
+        </span>
       </div>
     </S.HeroPost>
   );

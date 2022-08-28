@@ -1,5 +1,5 @@
 import { useQuery } from "@tanstack/react-query";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useContextSelector } from "use-context-selector";
 import { ErrorModalContext } from "../../context/ErrorFeedbackContext";
 import { ErrorHandling } from "../../errors/errorHandling/ErrorHandling";

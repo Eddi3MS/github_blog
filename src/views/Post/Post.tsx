@@ -9,9 +9,10 @@ import { useCallback, useEffect, useState } from "react";
 import { useContextSelector } from "use-context-selector";
 import { ErrorModalContext } from "../../context/ErrorFeedbackContext";
 import { ErrorHandling } from "../../errors/errorHandling/ErrorHandling";
+import { ISingleIssueDTO } from "../../services/githubService/dtos/GithubServiceDTOs";
 
 const Post = () => {
-  const [data, setData] = useState<any>();
+  const [data, setData] = useState<ISingleIssueDTO>();
   const { id } = useParams<{ id: string }>();
 
   const setErrorModal = useContextSelector(
@@ -21,13 +22,13 @@ const Post = () => {
 
   const getIssueData = useCallback(async (id: number) => {
     try {
-      const response = await GithubService.getSingleIssue({
+      const { data } = await GithubService.getSingleIssue({
         id: id,
         user: "eddi3ms",
         repo: "github_blog",
       });
 
-      setData(response.data);
+      setData(data);
     } catch (error) {
       const errorHandling = new ErrorHandling(error, "Algo deu errado .");
       setErrorModal(errorHandling.error);
@@ -54,22 +55,25 @@ const Post = () => {
     },
   };
 
+  if (!data) {
+    return <p>Erro ao buscar post.</p>;
+  }
+
   return (
     <>
       <Header />
       <HeroPost
         data={{
-          issueURL: data?.html_url,
-          username: data?.user?.login,
-          userURL: data?.user?.html_url,
-          issueTitle: data?.title,
-          createdAt: data?.created_at,
-          commentsNumber: data?.comments,
-          commentsURL: data?.comments_url,
+          issueURL: data.html_url,
+          username: data.user.login,
+          userURL: data.user.html_url,
+          issueTitle: data.title,
+          createdAt: data.created_at,
+          commentsNumber: data.comments,
         }}
       />
       <S.Post className="post__wrapper">
-        <ReactMarkdown components={customRenderers}>{data?.body}</ReactMarkdown>
+        <ReactMarkdown components={customRenderers}>{data.body}</ReactMarkdown>
       </S.Post>
     </>
   );

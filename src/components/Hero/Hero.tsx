@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { ErrorHandling } from "../../errors/errorHandling/ErrorHandling";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";

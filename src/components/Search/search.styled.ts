@@ -1,7 +1,10 @@
 import styled from "styled-components";
+import { fadeIn } from "../../styles/Global";
+
 export const Search = styled.div`
   max-width: 864px;
   margin-inline: auto;
+  animation: ${fadeIn} 0.2s forwards ease-in;
 
   @media (max-width: 900px) {
     margin-inline: 1rem;

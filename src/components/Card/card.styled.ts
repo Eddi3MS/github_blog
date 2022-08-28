@@ -1,8 +1,16 @@
 import styled from "styled-components";
+import { fadeIn } from "../../styles/Global";
 export const Card = styled.div`
   background-color: var(--post);
   padding: 2rem;
   border-radius: 10px;
+
+  animation: ${fadeIn} 0.2s forwards ease-in;
+
+  &:hover {
+    box-shadow: 0 0 0 2px var(--border);
+    cursor: pointer;
+  }
 
   header {
     display: flex;
@@ -11,7 +19,7 @@ export const Card = styled.div`
     gap: 1rem;
 
     span {
-      min-width: 60px;
+      min-width: 90px;
       text-align: right;
       color: var(--span);
       font-size: var(--size-14);

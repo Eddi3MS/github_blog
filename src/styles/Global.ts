@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle, keyframes } from "styled-components";
 export const GlobalStyle = createGlobalStyle`
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap');
 
@@ -40,6 +40,8 @@ body {
   background-color: var(--background);
 }
 
-
-
 `;
+
+export const fadeIn = keyframes`
+0% { opacity: 0; transform: translateY(-20px) }
+100% { opacity: 1; transform: translateY(0) }`;

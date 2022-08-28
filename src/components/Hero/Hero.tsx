@@ -2,7 +2,6 @@ import React, { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { ErrorHandling } from "../../errors/errorHandling/ErrorHandling";
 import { useError } from "../../context/ErrorFeedbackContext";
-import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import {
@@ -12,18 +11,19 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import * as S from "./hero.styled";
+import { GithubService } from "../../services/githubService";
 
 const Hero = () => {
   const { setErrorModal } = useError();
 
   const { data, isLoading, error } = useQuery(["getStats"], async () => {
-    const { data } = await axios.get(`https://api.github.com/users/Eddi3MS`);
+    const { data } = await GithubService.getUserData();
     return data;
   });
 
   useEffect(() => {
     if (error) {
-      const errorHandling = new ErrorHandling(error, "Erro ao postar a foto.");
+      const errorHandling = new ErrorHandling(error, "Algo deu errado .");
       setErrorModal(errorHandling.error);
     }
   }, [error]);

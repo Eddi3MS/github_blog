@@ -11,29 +11,29 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Header, Hero, Posts, Search } from "./components";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
+import Home from "./views/Home";
+import Post from "./views/Post";
 
 function App() {
   const client = new QueryClient({
     defaultOptions: {
       queries: {
-        refetchOnWindowFocus: false,
+        refetchOnWindowFocus: true,
       },
     },
   });
 
   return (
     <QueryClientProvider client={client}>
-      <Header />
-      <Hero />
-      <Posts />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/post/:id" element={<Post />} />
+        </Routes>
+      </BrowserRouter>
     </QueryClientProvider>
   );
 }
 
 export default App;
-
-{
-  /*      <FontAwesomeIcon icon={faCalendarDay as IconProp} />
-      <FontAwesomeIcon icon={faChevronLeft as IconProp} />
-      <FontAwesomeIcon icon={faComment as IconProp} /> */
-}

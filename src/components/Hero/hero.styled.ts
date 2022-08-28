@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { fadeIn } from "../../styles/Global";
 export const Hero = styled.div`
   min-height: 212px;
   display: flex;
@@ -10,6 +11,8 @@ export const Hero = styled.div`
   position: relative;
   top: -80px;
   gap: 2rem;
+
+  animation: ${fadeIn} 0.2s forwards ease-in;
 
   @media (max-width: 900px) {
     top: -40px;
@@ -74,4 +77,10 @@ export const Hero = styled.div`
       }
     }
   }
+`;
+
+export const Error = styled.div`
+  background-color: var(--label);
+  padding: 2.5rem;
+  text-align: center;
 `;

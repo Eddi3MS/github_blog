@@ -1,32 +1,37 @@
 import { useQuery } from "@tanstack/react-query";
-import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { GithubService } from "../../services/githubService";
 import Card from "../Card";
 import Search from "../Search";
 import * as S from "./posts.styled";
 
 const Posts = () => {
-  const { data } = useQuery(["issues"], async () => {
-    const response = await axios.get(`https://api.github.com/search/issues`, {
-      params: {
-        q: "repo:eddi3ms/github_blog",
-      },
+  const [query, setQuery] = useState("");
+
+  const { data, refetch } = useQuery(["issues"], async () => {
+    const response = await GithubService.getRepoIssues({
+      query,
+      user: "eddi3ms",
+      repo: "github_blog",
     });
 
     return response.data;
   });
-  console.log(
-    "🚀 ~ file: App.tsx ~ line 37 ~ const{data}=useQuery ~ data",
-    data
-  );
+
+  useEffect(() => {
+    refetch();
+  }, [query]);
 
   return (
     <>
-      <Search pub={data?.total_count} />
+      <Search pub={data?.total_count} handleSearch={setQuery} />
+
       <S.Posts>
-        {data?.items.map((item: any) => (
-          <Card post={item} key={item.id} />
-        ))}
+        {data && data.items.length === 0 ? (
+          <p className="no_content">Nenhum Post encontrado.</p>
+        ) : (
+          data?.items.map((item: any) => <Card post={item} key={item.id} />)
+        )}
       </S.Posts>
     </>
   );

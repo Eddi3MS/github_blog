@@ -25,4 +25,11 @@ export const Post = styled.div`
     letter-spacing: 0.1px;
     font-size: var(--size-20);
   }
+
+  img {
+    display: block;
+    max-width: 100%;
+    margin-block: 2.5rem;
+    border-radius: 10px;
+  }
 `;

@@ -1,5 +1,8 @@
 import { useQuery } from "@tanstack/react-query";
 import React, { useEffect, useState } from "react";
+import { useContextSelector } from "use-context-selector";
+import { ErrorModalContext } from "../../context/ErrorFeedbackContext";
+import { ErrorHandling } from "../../errors/errorHandling/ErrorHandling";
 import { GithubService } from "../../services/githubService";
 import Card from "../Card";
 import Search from "../Search";
@@ -8,7 +11,12 @@ import * as S from "./posts.styled";
 const Posts = () => {
   const [query, setQuery] = useState("");
 
-  const { data, refetch } = useQuery(["issues"], async () => {
+  const setErrorModal = useContextSelector(
+    ErrorModalContext,
+    (state) => state.setErrorModal
+  );
+
+  const { data, refetch, error } = useQuery(["issues"], async () => {
     const response = await GithubService.getRepoIssues({
       query,
       user: "eddi3ms",
@@ -21,6 +29,13 @@ const Posts = () => {
   useEffect(() => {
     refetch();
   }, [query]);
+
+  useEffect(() => {
+    if (error) {
+      const errorHandling = new ErrorHandling(error, "Algo deu errado .");
+      setErrorModal(errorHandling.error);
+    }
+  }, [error]);
 
   return (
     <>

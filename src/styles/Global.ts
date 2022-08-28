@@ -40,6 +40,26 @@ body {
   background-color: var(--background);
 }
 
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+
+::-webkit-scrollbar-track {
+  background: var(--border);
+}
+
+
+::-webkit-scrollbar-thumb {
+  background:var(--label);
+}
+
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--post);
+}
+
 `;
 
 export const fadeIn = keyframes`

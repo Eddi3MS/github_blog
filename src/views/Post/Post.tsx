@@ -1,4 +1,3 @@
-import { useQuery } from "@tanstack/react-query";
 import ReactMarkdown from "react-markdown";
 import { useParams } from "react-router-dom";
 import { Header, HeroPost } from "../../components";
@@ -7,10 +6,18 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { coldarkDark } from "react-syntax-highlighter/dist/esm/styles/prism";
 import * as S from "./post.styled";
 import { useCallback, useEffect, useState } from "react";
+import { useContextSelector } from "use-context-selector";
+import { ErrorModalContext } from "../../context/ErrorFeedbackContext";
+import { ErrorHandling } from "../../errors/errorHandling/ErrorHandling";
 
 const Post = () => {
   const [data, setData] = useState<any>();
   const { id } = useParams<{ id: string }>();
+
+  const setErrorModal = useContextSelector(
+    ErrorModalContext,
+    (state) => state.setErrorModal
+  );
 
   const getIssueData = useCallback(async (id: number) => {
     try {
@@ -21,7 +28,10 @@ const Post = () => {
       });
 
       setData(response.data);
-    } catch (error) {}
+    } catch (error) {
+      const errorHandling = new ErrorHandling(error, "Algo deu errado .");
+      setErrorModal(errorHandling.error);
+    }
   }, []);
 
   useEffect(() => {

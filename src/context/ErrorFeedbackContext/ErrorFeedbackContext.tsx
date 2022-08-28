@@ -1,13 +1,9 @@
-import {
-  createContext,
-  ReactNode,
-  useCallback,
-  useContext,
-  useState,
-} from "react";
+import { ReactNode, useCallback, useContext, useState } from "react";
+import { createContext } from "use-context-selector";
 import { IError } from "../../errors/IError";
+import { useContextSelector } from "use-context-selector";
 
-interface ICreateContext {
+export interface ICreateContext {
   error: IError | null;
   setErrorModal: (error: IError | null) => void;
 }
@@ -35,5 +31,3 @@ export const ErrorModalContextProvider = ({
     </ErrorModalContext.Provider>
   );
 };
-
-export const useError = () => useContext(ErrorModalContext);

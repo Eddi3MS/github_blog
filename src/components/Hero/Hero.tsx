@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { ErrorHandling } from "../../errors/errorHandling/ErrorHandling";
-import { useError } from "../../context/ErrorFeedbackContext";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faGithub } from "@fortawesome/free-brands-svg-icons";
 import {
@@ -12,9 +11,14 @@ import {
 import { IconProp } from "@fortawesome/fontawesome-svg-core";
 import * as S from "./hero.styled";
 import { GithubService } from "../../services/githubService";
+import { ErrorModalContext } from "../../context/ErrorFeedbackContext";
+import { useContextSelector } from "use-context-selector";
 
 const Hero = () => {
-  const { setErrorModal } = useError();
+  const setErrorModal = useContextSelector(
+    ErrorModalContext,
+    (state) => state.setErrorModal
+  );
 
   const { data, isLoading, error } = useQuery(["getStats"], async () => {
     const { data } = await GithubService.getUserData();

@@ -5,6 +5,8 @@ import { ErrorModalContext } from "../../context/ErrorFeedbackContext";
 import { ErrorHandling } from "../../errors/errorHandling/ErrorHandling";
 import { GithubService } from "../../services/githubService";
 import Card from "../Card";
+import Loading from "../Loading";
+import Portal from "../Portal";
 import Search from "../Search";
 import * as S from "./posts.styled";
 
@@ -16,7 +18,7 @@ const Posts = () => {
     (state) => state.setErrorModal
   );
 
-  const { data, refetch, error } = useQuery(["issues"], async () => {
+  const { data, refetch, error, isLoading } = useQuery(["issues"], async () => {
     const response = await GithubService.getRepoIssues({
       query,
       user: "eddi3ms",
@@ -36,6 +38,14 @@ const Posts = () => {
       setErrorModal(errorHandling.error);
     }
   }, [error]);
+
+  if (isLoading) {
+    return (
+      <Portal show={!!isLoading}>
+        <Loading />
+      </Portal>
+    );
+  }
 
   return (
     <>

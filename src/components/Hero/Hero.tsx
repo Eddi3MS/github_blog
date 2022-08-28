@@ -13,6 +13,8 @@ import * as S from "./hero.styled";
 import { GithubService } from "../../services/githubService";
 import { ErrorModalContext } from "../../context/ErrorFeedbackContext";
 import { useContextSelector } from "use-context-selector";
+import Portal from "../Portal";
+import Loading from "../Loading";
 
 const Hero = () => {
   const setErrorModal = useContextSelector(
@@ -33,7 +35,11 @@ const Hero = () => {
   }, [error]);
 
   if (isLoading) {
-    return <p>loading..</p>;
+    return (
+      <Portal show={!!isLoading}>
+        <Loading />
+      </Portal>
+    );
   }
 
   return (

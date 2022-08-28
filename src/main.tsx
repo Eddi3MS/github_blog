@@ -5,14 +5,17 @@ import { ErrorModalContextProvider } from "./context/ErrorFeedbackContext";
 import { GlobalStyle } from "./styles/Global";
 import moment from "moment";
 import "moment/dist/locale/pt-br";
+import { LoadingContextProvider } from "./context/LoadingContext";
 
 moment.locale("pt-br");
 
 ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
     <GlobalStyle />
-    <ErrorModalContextProvider>
-      <App />
-    </ErrorModalContextProvider>
+    <LoadingContextProvider>
+      <ErrorModalContextProvider>
+        <App />
+      </ErrorModalContextProvider>
+    </LoadingContextProvider>
   </React.StrictMode>
 );

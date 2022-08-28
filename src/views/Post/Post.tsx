@@ -10,6 +10,7 @@ import { useContextSelector } from "use-context-selector";
 import { ErrorModalContext } from "../../context/ErrorFeedbackContext";
 import { ErrorHandling } from "../../errors/errorHandling/ErrorHandling";
 import { ISingleIssueDTO } from "../../services/githubService/dtos/GithubServiceDTOs";
+import { LoadingContext } from "../../context/LoadingContext";
 
 const Post = () => {
   const [data, setData] = useState<ISingleIssueDTO>();
@@ -19,8 +20,13 @@ const Post = () => {
     ErrorModalContext,
     (state) => state.setErrorModal
   );
+  const setLoading = useContextSelector(
+    LoadingContext,
+    (state) => state.setLoading
+  );
 
   const getIssueData = useCallback(async (id: number) => {
+    setLoading(true);
     try {
       const { data } = await GithubService.getSingleIssue({
         id: id,
@@ -32,6 +38,8 @@ const Post = () => {
     } catch (error) {
       const errorHandling = new ErrorHandling(error, "Algo deu errado .");
       setErrorModal(errorHandling.error);
+    } finally {
+      setLoading(false);
     }
   }, []);
 

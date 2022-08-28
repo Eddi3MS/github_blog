@@ -13,6 +13,7 @@ export const Post = styled.div`
 
   pre {
     border-radius: 10px;
+    margin-block: 2.5rem;
   }
 
   h3,
